@@ -1,0 +1,6 @@
+{
+  "name": "Bit6 External Authentication",
+  "description": "Sample app demonstrating external user authentication in Bit6",
+  "repository": "https://github.com/bit6/bit6-token-generator-php",
+  "keywords": ["bit6"]
+}
