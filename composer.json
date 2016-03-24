@@ -1,0 +1,13 @@
+{
+    "name": "bit6/bit6-token-generator-php",
+    "description": "Token generator for Bit6 external authentication",
+    "autoload": {
+        "psr-0": {
+            "Bit6": "src/"
+        }
+    },
+    "require": {
+        "firebase/php-jwt": "^3.0",
+        "vlucas/phpdotenv": "^2.2"
+    }
+}
