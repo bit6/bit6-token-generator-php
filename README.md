@@ -46,8 +46,8 @@ Then authenticate user in javascript after loading bit6.min.js by:
 </script>
 ```
 ### Create Token
-The createToken method take three variables
-* $identities (required) - A string or array of strings of identity URIs as shown below
+The `createToken` method takes three variables (1 required, two optional):
+* `$identities` (required) - A string or array of strings of identity URIs as shown below
 <table>
   <tr>
     <th>Protocol</th>
@@ -64,7 +64,7 @@ The createToken method take three variables
   <tr>
     <td>grp</td>
     <td>/[0-9a-zA-Z._]{22}/</td>
-    <td>Group</td>
+    <td>Group ID</td>
     <td>grp:9de82b5b_236d_40f6_b5a2</td>
   </tr>
   <tr>
@@ -87,8 +87,8 @@ The createToken method take three variables
   </tr>
 </table>
 
-* $ttl (optional) - The length of time before token expires in minutes (default - 10)
-* $issued (optional) - The unix timestamp at which token was generated (default - current system time)
+* `$ttl` (optional) - The length of time before token expires in minutes (default - 10)
+* `$issued` (optional) - The unix timestamp at which token was generated (default - current system time)
 
 ### Running Locally
 
