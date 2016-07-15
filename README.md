@@ -31,9 +31,9 @@ $token = $bit6_tg->createToken($identities);
 ```
 Then authenticate user in javascript after loading bit6.min.js by:
 ```html
-<script>var token = '<?= $token ?>';</script>
-```
-```js
+<script>
+  var token = '<?= $token ?>';
+
   // Authenticate with external token
   b6.session.external(token, function(err) {
     if (err) {
@@ -43,8 +43,21 @@ Then authenticate user in javascript after loading bit6.min.js by:
       console.log('Token login successful');
     }
   });
-``` 
+</script>
+```
+### Create Token
+The createToken method take three variables
+* $identities (required) - A string or array of strings of identity URIs as shown below
+| Protocol | Data (RegEx)                                                   | Type             | Example                                  |
+|----------|----------------------------------------------------------------|------------------|------------------------------------------|
+| usr      | /^[a-z0-9.]+$/                                                 | User             | usr:john123                              |
+| grp      | /[0-9a-zA-Z._]{22}/                                            | Group            | grp:9de82b5b_236d_40f6_b5a2              |
+| mailto   | /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,8}$/                     | Email Address    | mailto:test@user.com                     |
+| tel      | /^\+[1-9]{1}[0-9]{8,15}$/                                      | Telephone Number | tel:12345678901                          |
+| uid      | /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/ | Unique ID        | uid:9de82b5b-236d-40f6-b5a2-e16f5d09651d |
 
+* $ttl (optional) - The length of time before token expires in minutes (default - 10)
+* $issued (optional) - The unix timestamp at which token was generated (default - current system time)
 ### Running Locally
 
 ```sh
