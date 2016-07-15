@@ -6,6 +6,10 @@
     "authors": [
       {
         "name": "Alexey G"
+      },
+      {
+        "name": "Jermaine McFarlane",
+        "email": "j.mcfarlane.mbbs@gmail.com"
       }
     ],
     "autoload": {
