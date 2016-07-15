@@ -48,16 +48,55 @@ Then authenticate user in javascript after loading bit6.min.js by:
 ### Create Token
 The createToken method take three variables
 * $identities (required) - A string or array of strings of identity URIs as shown below
-| Protocol | Data (RegEx)                                                   | Type             | Example                                  |
-|----------|----------------------------------------------------------------|------------------|------------------------------------------|
-| usr      | /^[a-z0-9.]+$/                                                 | User             | usr:john123                              |
-| grp      | /[0-9a-zA-Z._]{22}/                                            | Group            | grp:9de82b5b_236d_40f6_b5a2              |
-| mailto   | /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,8}$/                     | Email Address    | mailto:test@user.com                     |
-| tel      | /^\+[1-9]{1}[0-9]{8,15}$/                                      | Telephone Number | tel:12345678901                          |
-| uid      | /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/ | Unique ID        | uid:9de82b5b-236d-40f6-b5a2-e16f5d09651d |
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;margin:0px auto;}
+.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
+.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
+.tg .tg-amwm{font-weight:bold;text-align:center;vertical-align:top}
+.tg .tg-yw4l{vertical-align:top}
+</style>
+<table class="tg">
+  <tr>
+    <th class="tg-amwm">Protocol</th>
+    <th class="tg-amwm">Data (RegEx)</th>
+    <th class="tg-amwm">Type</th>
+    <th class="tg-amwm">Example</th>
+  </tr>
+  <tr>
+    <td class="tg-yw4l">usr</td>
+    <td class="tg-yw4l">/^[a-z0-9.]+$/</td>
+    <td class="tg-yw4l">User</td>
+    <td class="tg-yw4l">usr:john123</td>
+  </tr>
+  <tr>
+    <td class="tg-yw4l">grp</td>
+    <td class="tg-yw4l">/[0-9a-zA-Z._]{22}/</td>
+    <td class="tg-yw4l">Group</td>
+    <td class="tg-yw4l">grp:9de82b5b_236d_40f6_b5a2</td>
+  </tr>
+  <tr>
+    <td class="tg-yw4l">mailto</td>
+    <td class="tg-yw4l">/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,8}$/</td>
+    <td class="tg-yw4l">Email Address</td>
+    <td class="tg-yw4l">mailto:test@user.com</td>
+  </tr>
+  <tr>
+    <td class="tg-yw4l">tel</td>
+    <td class="tg-yw4l">/^\+[1-9]{1}[0-9]{8,15}$/</td>
+    <td class="tg-yw4l">Telephone Number</td>
+    <td class="tg-yw4l">tel:12345678901</td>
+  </tr>
+  <tr>
+    <td class="tg-yw4l">uid</td>
+    <td class="tg-yw4l">/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/</td>
+    <td class="tg-yw4l">Unique ID</td>
+    <td class="tg-yw4l">uid:9de82b5b-236d-40f6-b5a2-e16f5d09651d</td>
+  </tr>
+</table>
 
 * $ttl (optional) - The length of time before token expires in minutes (default - 10)
 * $issued (optional) - The unix timestamp at which token was generated (default - current system time)
+
 ### Running Locally
 
 ```sh
