@@ -7,6 +7,43 @@ A super simple application demonstrating the external authentication in Bit6.
 
 * Get the API Key and Secret at [Bit6 Dashboard](https://dashboard.bit6.com).
 
+### Composer
+
+To incorporate into your current project simply run:
+```sh
+$ composer.phar require bit6/bit6-token-generator-php
+```
+
+To generate token:
+```php
+// Ideally pull variables by parsing ini file or from env
+$apiKey = 'API_KEY';  
+$apiSecret = 'API_SECRET';
+
+// Create new TokenGenerator
+$bit6_tg = new Bit6\TokenGenerator($apiKey, $apiSecret);
+
+// Get identities from your app post authentication
+$identities = "mailto:user@test.com";
+
+// Generate token
+$token = $bit6_tg->createToken($identities);
+```
+Then authenticate user in javascript after loading bit6.min.js by:
+```html
+<script>var token = '<?= $token ?>';</script>
+```
+```js
+  // Authenticate with external token
+  b6.session.external(token, function(err) {
+    if (err) {
+      console.log('Token login error', err);
+    }
+    else {
+      console.log('Token login successful');
+    }
+  });
+``` 
 
 ### Running Locally
 
