@@ -48,49 +48,42 @@ Then authenticate user in javascript after loading bit6.min.js by:
 ### Create Token
 The createToken method take three variables
 * $identities (required) - A string or array of strings of identity URIs as shown below
-<style type="text/css">
-.tg  {border-collapse:collapse;border-spacing:0;margin:0px auto;}
-.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
-.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
-.tg .tg-amwm{font-weight:bold;text-align:center;vertical-align:top}
-.tg .tg-yw4l{vertical-align:top}
-</style>
-<table class="tg">
+<table>
   <tr>
-    <th class="tg-amwm">Protocol</th>
-    <th class="tg-amwm">Data (RegEx)</th>
-    <th class="tg-amwm">Type</th>
-    <th class="tg-amwm">Example</th>
+    <th>Protocol</th>
+    <th>Data (RegEx)</th>
+    <th>Type</th>
+    <th>Example</th>
   </tr>
   <tr>
-    <td class="tg-yw4l">usr</td>
-    <td class="tg-yw4l">/^[a-z0-9.]+$/</td>
-    <td class="tg-yw4l">User</td>
-    <td class="tg-yw4l">usr:john123</td>
+    <td>usr</td>
+    <td>/^[a-z0-9.]+$/</td>
+    <td>User</td>
+    <td>usr:john123</td>
   </tr>
   <tr>
-    <td class="tg-yw4l">grp</td>
-    <td class="tg-yw4l">/[0-9a-zA-Z._]{22}/</td>
-    <td class="tg-yw4l">Group</td>
-    <td class="tg-yw4l">grp:9de82b5b_236d_40f6_b5a2</td>
+    <td>grp</td>
+    <td>/[0-9a-zA-Z._]{22}/</td>
+    <td>Group</td>
+    <td>grp:9de82b5b_236d_40f6_b5a2</td>
   </tr>
   <tr>
-    <td class="tg-yw4l">mailto</td>
-    <td class="tg-yw4l">/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,8}$/</td>
-    <td class="tg-yw4l">Email Address</td>
-    <td class="tg-yw4l">mailto:test@user.com</td>
+    <td>mailto</td>
+    <td>/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,8}$/</td>
+    <td>Email Address</td>
+    <td>mailto:test@user.com</td>
   </tr>
   <tr>
-    <td class="tg-yw4l">tel</td>
-    <td class="tg-yw4l">/^\+[1-9]{1}[0-9]{8,15}$/</td>
-    <td class="tg-yw4l">Telephone Number</td>
-    <td class="tg-yw4l">tel:12345678901</td>
+    <td>tel</td>
+    <td>/^\+[1-9]{1}[0-9]{8,15}$/</td>
+    <td>Telephone Number</td>
+    <td>tel:12345678901</td>
   </tr>
   <tr>
-    <td class="tg-yw4l">uid</td>
-    <td class="tg-yw4l">/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/</td>
-    <td class="tg-yw4l">Unique ID</td>
-    <td class="tg-yw4l">uid:9de82b5b-236d-40f6-b5a2-e16f5d09651d</td>
+    <td>uid</td>
+    <td>/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/</td>
+    <td>Unique ID</td>
+    <td>uid:9de82b5b-236d-40f6-b5a2-e16f5d09651d</td>
   </tr>
 </table>
 
