@@ -1,6 +1,6 @@
-## Bit6 Token Generator for PHP
+## Bit6 Token Generator for PHP [![Build Status](https://travis-ci.org/jwelmac/bit6-token-generator-php.svg?branch=master)](https://travis-ci.org/jwelmac/bit6-token-generator-php)
 
-A super simple application demonstrating the external authentication in Bit6.
+A PHP package demonstrating for external authentication in Bit6.
 
 
 ### Prerequisites
