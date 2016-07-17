@@ -16,7 +16,7 @@ class TokenGeneratorTest extends \PHPUnit_Framework_TestCase
         global $apiKey, $apiSecret;
         $this->tg = new TokenGenerator($apiKey, $apiSecret);
     }
-  
+
     /**
     * Check for error message with missing parameters
     * @expectedException Exception
@@ -35,13 +35,21 @@ class TokenGeneratorTest extends \PHPUnit_Framework_TestCase
         // Indicate method
         fwrite(STDOUT, "\n". __METHOD__ . "\n");
 
+        //Check if data in identity is to be made lowercase
+        $lowerCaseURIs = ["uid", "mailto", "usr"];
+        $protocol = explode(":", $identity)[0];
+        if(in_array($protocol, $lowerCaseURIs)){
+          $identity = strtolower($identity);
+        }
+
+        //Set expectation
         $expected = $identity;
         $actual = $this->tg->normalizeIdentityURI($identity);
 
         // Assert equals
         $this->assertEquals($expected, $actual);
     }
-  
+
   /**
    * Process Identity URI with unknown protocol
    * @expectedException PHPUnit_Framework_Error
@@ -72,7 +80,7 @@ class TokenGeneratorTest extends \PHPUnit_Framework_TestCase
         // Assert equals
         $this->assertEquals($expected, $actual);
     }
-  
+
     /**
      * Check that error thrown when empty identity string given
      * @expectedException Exception
@@ -83,7 +91,7 @@ class TokenGeneratorTest extends \PHPUnit_Framework_TestCase
         fwrite(STDOUT, "\n". __METHOD__ . "\n");
         $actual = $this->tg->checkIdentities([]);
     }
-  
+
     /**
      * Check that error thrown when empty identity array given
      * @expectedException Exception
@@ -94,7 +102,7 @@ class TokenGeneratorTest extends \PHPUnit_Framework_TestCase
         fwrite(STDOUT, "\n". __METHOD__ . "\n");
         $actual = $this->tg->checkIdentities("");
     }
-  
+
     // Check that only identities in correct format is returned using array
     public function testCheckIdentitiesReturnOnlyValid()
     {
@@ -111,7 +119,7 @@ class TokenGeneratorTest extends \PHPUnit_Framework_TestCase
         // Assert equals
         $this->assertEquals($expected, $actual);
     }
-  
+
     /**
      * Check that error thrown when argument is not a string or array
      * @expectedException PHPUnit_Framework_Error
@@ -133,7 +141,14 @@ class TokenGeneratorTest extends \PHPUnit_Framework_TestCase
       // Indicate method
         fwrite(STDOUT, "\n". __METHOD__ . "\n");
 
-      // Set expectation
+        //Check if data in identity is to be made lowercase
+        $lowerCaseURIs = ["uid", "mailto", "usr"];
+        $protocol = explode(":", $identity)[0];
+        if(in_array($protocol, $lowerCaseURIs)){
+          $identity = strtolower($identity);
+        }
+
+        //Set expectation
         $expected = $identity;
         $result = $this->tg->createToken($identity);
         $actual = (array) JWT::decode($result, $apiSecret, array('HS256'));
@@ -163,7 +178,7 @@ class TokenGeneratorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(array_shift($expected), $actual['sub']);
         $this->assertEquals($expected, $actual['identities']);
     }
-  
+
     // Create token using option associative array
     public function testCreateTokenWithOptionsArray()
     {
@@ -197,7 +212,7 @@ class TokenGeneratorTest extends \PHPUnit_Framework_TestCase
       // Assert equals
         $this->assertEquals($expected, $actual);
     }
-  
+
     // Provide Indentity URIs as string
     public function stringURIProvider()
     {
@@ -206,7 +221,8 @@ class TokenGeneratorTest extends \PHPUnit_Framework_TestCase
             'Group' => ["grp:9de82b5b_236d_40f6_b5a2"],
             'Telephone Number' => ["tel:+12123331234"],
             'Unique ID'  => ["uid:9de82b5b-236d-40f6-b5a2-e16f5d09651d"],
-            'User' => ["usr:testuser123"]
+            'User' => ["usr:testuser123"],
+            'User with upper case' => ["usr:Test.User.123"]
         ];
     }
 }
