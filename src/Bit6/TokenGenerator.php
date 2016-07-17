@@ -8,7 +8,10 @@ class TokenGenerator
 {
     private $apiKey;
     private $apiSecret;
-
+    
+    /*
+    * Create new token generator
+    */
     public function __construct($apiKey, $apiSecret)
     {
         if (!$apiKey || !$apiSecret) {
@@ -21,30 +24,25 @@ class TokenGenerator
     /**
     * Create token for authentication process delegated to an external service
     * for example your own application server or an MBaaS platform
-    * see http://docs.bit6.com/guides/auth/ for guide
-    * see http://docs.bit6.com/guides/js/#managed for identity URI example
-    * @param string|array $identities String or Array of identity URI
-    * @param int $ttl Time before token expires (in minutes) (default - 10)
-    * @param int $issued Unix time stamp token issued (default - current time)
+    * see http://docs.bit6.com/guides/auth/ for authentication guide
+    * @param string|array $options The identity URI as a string or indexed array,
+    * or associative array with options as keys
     * @return string The token to be used in the Javascript SDK
     */
-    public function createToken($identities, $ttl = 10, $issued = null)
+    public function createToken($options)
     {
-        // Ensure all identities match identity URI format
-        // and convert string to array
-        $identities = $this->checkIdentities($identities);
+        // Normalize the options to ensure it matches the appropriate format
+        $options = $this->normalizeOptions($options);
+        // Extract variables from options
+        extract($options);
         // Primary identity
         $primary = array_shift($identities);
-        // Current time - Unix timestamp
-        if (!isset($issued)) {
-            $issued = time();
-        }
         // JWT claims
         $data = array (
             // Issued at
             'iat' => $issued,
-            // Expiration - 10 minutes
-            'exp' => $issued + $ttl*60,
+            // Expiration timestamp
+            'exp' => $expires,
             // Bit6 API key as audience claim
             'aud' => $this->apiKey,
             // Primary identity as subject
@@ -72,7 +70,7 @@ class TokenGenerator
         if (empty($identities)) {
             throw new \Exception("Must specify at least one identity");
         }
-
+      
       // Convert to array if string
         if (is_string($identities)) {
             $identities = array($identities);
@@ -134,8 +132,8 @@ class TokenGenerator
                 break;
             default:
                 // Protocol not matched
-                trigger_error("Protocol not recognized", E_USER_WARNING);
                 $remove = '/.*/';
+                trigger_error("Protocol not recognized: $protocol", E_USER_WARNING);
         }
       // Remove unwanted pattern
         $data = preg_replace($remove, "", $data);
@@ -146,5 +144,74 @@ class TokenGenerator
         } else {
              return false;
         }
+    }
+  
+    /**
+    * Normalize the createToken options
+    * @param string|array $options The identity URI as a string or indexed array,
+    * or associative array with options as keys
+    * @return array An associative array with the following keys:
+    * 'identities' - Array of identity URIs
+    * 'issued' - Unix timestamp at which token is created (default - current system time)
+    * 'expires' - Unix timestamp at which token expires (default - 10 minutes from time of creation)
+    */
+    public function normalizeOptions($options)
+    {
+      //What type of variable are we working with?
+        $type = gettype($options);
+      
+        switch ($type) {
+            case "string":
+                $identities = $options;
+                break;
+          
+            case "array":
+                // Associative array
+                if ($this->isAssoc($options)) {
+                    // Extract variables from options
+                    extract($options);
+                } else {
+                    $identities = $options;
+                }
+                break;
+          
+            // Unrecognized variable type given
+            default:
+                trigger_error(
+                    "Argument must be string or array: $type given",
+                    E_USER_FAILURE
+                );
+        }
+      
+      // Ensure all identities match identity URI format
+      // and convert string to array
+        $identities = $this->checkIdentities($identities);
+      
+      // Issued time - Unix timestamp
+        if (!isset($issued)) {
+            $issued = time();
+        }
+      
+      // Expiry time - Unix timestamp
+        if (!isset($expires)) {
+            $expires = $issued + (10 * 60);
+        }
+      
+      // return final array
+        return [
+        'identities' => $identities,
+        'issued' => $issued,
+        'expires' => $expires
+        ];
+    }
+  
+    /**
+    * Check if array is associative
+    * @param array The array to check
+    * @return boolean True - If associative, False - If indexed array
+    */
+    private function isAssoc($array)
+    {
+        return ($array !== array_values($array));
     }
 }

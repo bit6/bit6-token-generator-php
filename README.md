@@ -1,13 +1,13 @@
-## Bit6 Token Generator for PHP [![Build Status](https://travis-ci.org/jwelmac/bit6-token-generator-php.svg?branch=master)](https://travis-ci.org/jwelmac/bit6-token-generator-php)
+# Bit6 Token Generator for PHP [![Build Status](https://travis-ci.org/jwelmac/bit6-token-generator-php.svg?branch=master)](https://travis-ci.org/jwelmac/bit6-token-generator-php)
 
-A PHP package demonstrating for external authentication in Bit6.
+A PHP package demonstrating the use of delegated authentication in Bit6.
 
 
-### Prerequisites
+## Prerequisites
 
 * Get the API Key and Secret at [Bit6 Dashboard](https://dashboard.bit6.com).
 
-### Composer
+## Install via Composer
 
 To incorporate into your current project simply run:
 ```sh
@@ -23,31 +23,62 @@ $apiSecret = 'API_SECRET';
 // Create new TokenGenerator
 $bit6_tg = new Bit6\TokenGenerator($apiKey, $apiSecret);
 
-// Get identities from your app post authentication
+// Get identities from your app following internal authentication
+// Then generate token using one of the following options
+
+/********************************************* 
+****************** Option 1 ******************
+*********************************************/
+// Using a string to represent an identity URI
 $identities = "mailto:user@test.com";
 
 // Generate token
 $token = $bit6_tg->createToken($identities);
-```
-Then authenticate user in javascript after loading bit6.min.js by:
-```html
-<script>
-  var token = '<?= $token ?>';
 
+/********************************************* 
+****************** Option 2 ******************
+*********************************************/
+// Using an indexed array of identity URIs
+$identities = array("usr:john123", "tel:12345678901");
+
+// Generate token
+$token = $bit6_tg->createToken($identities);
+
+/********************************************* 
+****************** Option 3 ******************
+*********************************************/
+// Using an associative array of options
+$options = array(
+  "identities" => array("usr:john123", "mailto:user@test.com"),
+  "issued" => 1468709885,
+  "expires" => 1468796285
+);
+
+// Generate token
+$token = $bit6_tg->createToken($options);
+```
+
+Pass token to browser using preferred method eg. via JSON response,  url  or inline-script.<br>
+Then authenticate user in javascript after loading bit6.min.js as shown below:
+```js
   // Authenticate with external token
   b6.session.external(token, function(err) {
     if (err) {
+      // Houston we have a problem!
       console.log('Token login error', err);
     }
     else {
+      // Code to run post authentication
       console.log('Token login successful');
     }
   });
 </script>
 ```
-### Create Token
-The `createToken` method takes three variables (1 required, two optional):
-* `$identities` (required) - A string or array of strings of identity URIs as shown below
+### Create Token Options
+The `createToken` method can be called with an associative array with the following keys:
+* `identities` (required) - A string or array of strings of identity URIs as shown below.
+When an array is used the first value becomes the primary identity.
+
 <table>
   <tr>
     <th>Protocol</th>
@@ -87,9 +118,10 @@ The `createToken` method takes three variables (1 required, two optional):
   </tr>
 </table>
 
-* `$ttl` (optional) - The length of time before token expires in minutes (default - 10)
-* `$issued` (optional) - The unix timestamp at which token was generated (default - current system time)
+* `issued` (optional) - The unix timestamp at which token was generated (default - current system time)
+* `expires` (optional) - The unix timestamp at which the token will expire (default - 10 minutes from time of creation)
 
+## Using example code
 ### Running Locally
 
 ```sh
