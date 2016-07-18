@@ -38,8 +38,8 @@ class TokenGeneratorTest extends \PHPUnit_Framework_TestCase
         //Check if data in identity is to be made lowercase
         $lowerCaseURIs = ["uid", "mailto", "usr"];
         $protocol = explode(":", $identity)[0];
-        if(in_array($protocol, $lowerCaseURIs)){
-          $identity = strtolower($identity);
+        if (in_array($protocol, $lowerCaseURIs)) {
+            $identity = strtolower($identity);
         }
 
         //Set expectation
@@ -144,8 +144,8 @@ class TokenGeneratorTest extends \PHPUnit_Framework_TestCase
         //Check if data in identity is to be made lowercase
         $lowerCaseURIs = ["uid", "mailto", "usr"];
         $protocol = explode(":", $identity)[0];
-        if(in_array($protocol, $lowerCaseURIs)){
-          $identity = strtolower($identity);
+        if (in_array($protocol, $lowerCaseURIs)) {
+            $identity = strtolower($identity);
         }
 
         //Set expectation
