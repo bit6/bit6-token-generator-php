@@ -14,7 +14,10 @@ To incorporate into your current project simply run:
 $ composer.phar require bit6/bit6-token-generator-php
 ```
 
-To generate token:
+### Generating Tokens
+
+* Create token generator:
+
 ```php
 // Ideally pull variables by parsing ini file or from env
 $apiKey = 'API_KEY';  
@@ -22,32 +25,31 @@ $apiSecret = 'API_SECRET';
 
 // Create new TokenGenerator
 $bit6_tg = new Bit6\TokenGenerator($apiKey, $apiSecret);
+```
 
-// Get identities from your app following internal authentication
-// Then generate token using one of the following options
+* Get identities from your app following internal authentication.
 
-/********************************************* 
-****************** Option 1 ******************
-*********************************************/
-// Using a string to represent an identity URI
+* Generate token using one of the following options:
+
+*Option 1: Using a string to represent an identity URI*
+```php
 $identities = "mailto:user@test.com";
 
 // Generate token
 $token = $bit6_tg->createToken($identities);
+```
 
-/********************************************* 
-****************** Option 2 ******************
-*********************************************/
-// Using an indexed array of identity URIs
+*Option 2: Using an indexed array of identity URIs*
+
+```php
 $identities = array("usr:john123", "tel:12345678901");
 
 // Generate token
 $token = $bit6_tg->createToken($identities);
+```
+*Option 3: Using an associative array of options*
 
-/********************************************* 
-****************** Option 3 ******************
-*********************************************/
-// Using an associative array of options
+```php
 $options = array(
   "identities" => array("usr:john123", "mailto:user@test.com"),
   "issued" => 1468709885,
@@ -58,22 +60,6 @@ $options = array(
 $token = $bit6_tg->createToken($options);
 ```
 
-Pass token to browser using preferred method eg. via JSON response,  url  or inline-script.<br>
-Then authenticate user in javascript after loading bit6.min.js as shown below:
-```js
-  // Authenticate with external token
-  b6.session.external(token, function(err) {
-    if (err) {
-      // Houston we have a problem!
-      console.log('Token login error', err);
-    }
-    else {
-      // Code to run post authentication
-      console.log('Token login successful');
-    }
-  });
-</script>
-```
 ### Create Token Options
 The `createToken` method can be called with an associative array with the following keys:
 * `identities` (required) - A string or array of strings of identity URIs as shown below.
@@ -120,6 +106,25 @@ When an array is used the first value becomes the primary identity.
 
 * `issued` (optional) - The unix timestamp at which token was generated (default - current system time)
 * `expires` (optional) - The unix timestamp at which the token will expire (default - 10 minutes from time of creation)
+
+### Authentication
+Pass the token to browser using your preferred method eg. via JSON response,  url  or inline-script.
+
+Authenticate user in javascript (after loading bit6.min.js) as shown below:
+```js
+  // Authenticate with external token
+  b6.session.external(token, function(err) {
+    if (err) {
+      // Houston we have a problem!
+      console.log('Token login error', err);
+    }
+    else {
+      // Code to run post authentication
+      console.log('Token login successful');
+    }
+  });
+</script>
+```
 
 ## Using example code
 ### Running Locally
