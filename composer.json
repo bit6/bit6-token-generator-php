@@ -1,6 +1,17 @@
 {
-    "name": "bit6/bit6-token-generator-php",
+    "name": "jwelmac/bit6-token-generator-php",
     "description": "Token generator for Bit6 external authentication",
+    "license": "Apache License",
+    "minimum-stability": "dev",
+    "authors": [
+      {
+        "name": "Alexey G"
+      },
+      {
+        "name": "Jermaine McFarlane",
+        "email": "j.mcfarlane.mbbs@gmail.com"
+      }
+    ],
     "autoload": {
         "psr-0": {
             "Bit6": "src/"
@@ -8,6 +19,14 @@
     },
     "require": {
         "firebase/php-jwt": "^3.0",
-        "vlucas/phpdotenv": "^2.2"
+        "vlucas/phpdotenv": "^2.2",
+        "phpunit/phpunit": "^5.4"
+    },
+    "require-dev": {
+          "squizlabs/php_codesniffer": "2.*"
+    },
+    "scripts": {
+        "sniff" : "vendor/bin/phpcs --standard=PSR2 --extensions=php src tests",
+        "fix": "vendor/bin/phpcbf --standard=PSR2 --extensions=php src tests"
     }
 }
