@@ -1,5 +1,5 @@
 {
-    "name": "bit6/bit6-token-generator-php",
+    "name": "jwelmac/bit6-token-generator-php",
     "description": "Token generator for Bit6 external authentication",
     "license": "Apache License",
     "minimum-stability": "dev",
