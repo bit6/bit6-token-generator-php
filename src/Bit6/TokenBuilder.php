@@ -16,7 +16,6 @@ class TokenBuilder {
         // Bit6 API default values
         $this->props->env = 'prod';
         $this->props->access = 'client';
-        $this->props->version = 'v1';
     }
 
     public function access($access) {
@@ -65,6 +64,11 @@ class TokenBuilder {
         return $this;
     }
 
+    public function profile($profile) {
+        $this->props->profile = $profile;
+        return $this;
+    }
+
     public function ttl($ttl) {
         $this->props->ttl = $ttl;
         return $this;
@@ -89,7 +93,7 @@ class TokenBuilder {
         $aud = $p->aud;
         if  (!$aud) {
             // Audience is the Base API URL
-            $aud = 'https://api.' . $p->env . '.bit6.com/' . $p->access . '/' . $p->version;
+            $aud = 'https://api.' . $p->env . '.bit6.com/' . $p->access;
         }
         // Current time - Unix timestamp
         $now = time();
@@ -107,6 +111,10 @@ class TokenBuilder {
         // Identity/device as subject - optional
         if ($sub) {
             $claims['sub'] = $sub;
+        }
+        // Profile info - optional
+        if ($p->profile) {
+            $claims['profile'] = $p->profile;
         }
         // Set expiration claim - optional
         if ($p->exp) {
